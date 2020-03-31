@@ -1,0 +1,31 @@
+package com.company;
+
+import  java.io.*;
+import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.StdRandom;
+
+public class Main {
+    public static void main(String[] args) {
+        MaxPQueue maxPQueue = new MaxPQueue(10);
+//        for (int i = 0; i < 10 ; i++) {
+//            String d;
+//            d = "f";
+//            maxPQueue.insert(d);
+//            StdOut.println(d.toString()+" добавлена в очередь");
+//            StdOut.println("Самая поздняя дата - " + maxPQueue.peekMax());
+//
+//        }
+        StdOut.println("******************************************************");
+        MaxPQueue<Integer> mpq = new MaxPQueue<>(5);
+        for (int i = 0; i < 5; i++) {
+            int a = StdRandom.uniform(-20,20);
+            StdOut.println("*** Добавим элемент a = "+a);
+            mpq.insert(a);
+            StdOut.println("*** Очередь на шаге "+i+":");
+            mpq.printQueue();
+
+        }
+        StdOut.println("Вывод массива");
+        while (!mpq.isEmpty()) StdOut.println(mpq.delMax());
+    }
+}
