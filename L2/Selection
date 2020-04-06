@@ -1,0 +1,12 @@
+public class Selection {//сортировка выбором
+    public static void sort (Comparable[] aSelection){
+        int N = aSelection.length;
+        for (int i = 0; i < N; i++){
+            int min = i;
+            for (int j = i+1; j < N; j++){
+                if (Example.less(aSelection[j], aSelection[min])) min = j;
+                    Example.exch(aSelection, i, min);
+            }
+        }
+    }
+}
