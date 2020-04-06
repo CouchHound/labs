@@ -1,0 +1,30 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import java.util.Scanner;
+
+import static com.company.Attempt1.*;
+
+public class Main {
+    public static void main(String[] args) {
+	    Scanner in = new Scanner(System.in);
+        StdOut.println("Введите количество веревок:");
+        int V = in.nextInt();
+        Attempt1.MMM(V);
+        D(V);
+    }
+
+    public static void D(int V) {//объединение кусочков
+        StdOut.println("\n\nКусочков: " + V + ", соединений: " + (V-1) + "\n");
+        int sum = 0, a, b;//общая сумма; 1 наим.; 2 наим.
+        for (int i = 0; i < V - 1; i++) {
+            printQueue();
+            a = (int)delMin(); b = (int)delMin(); //наименьшие значения
+            sum += a+b;
+            insert(a+b);//возврат в кучу
+            StdOut.println("\nСоединение номер " + (i+1) + ": " + a + " и " + b);
+            StdOut.println("Стоимость соединений на данный момент: " + sum + "\n");
+        }
+        StdOut.println("Итоговая стоимость: " + sum);
+    }
+}
