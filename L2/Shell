@@ -1,0 +1,15 @@
+public class Shell {
+    public static void sort(Comparable[] aShell) {
+        int N = aShell.length;
+        int h = 1;
+        while (h < N/3)
+            h = 3*h + 1;
+        while (h >= 1){
+            for (int i = h; i < N; i++){
+                for (int j = i; j >= h && Example.less(aShell[j], aShell[j-h]); j -= h)
+                    Example.exch(aShell, j, j-h);
+            }
+            h = h/3;
+        }
+    }
+}
