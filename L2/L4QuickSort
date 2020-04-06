@@ -1,0 +1,16 @@
+import edu.princeton.cs.introcs.StdRandom;
+
+public class QuickSort {
+    public static void sort(Comparable[] aQuick){
+        StdRandom.shuffle(aQuick);
+        sort(aQuick, 0, aQuick.length-1);
+    }
+
+    private static void sort(Comparable[] aQuick, int lo, int hi){
+        if (hi <= lo)
+            return;
+        int j = Example.partition(aQuick, lo, hi);
+        sort(aQuick, lo, j-1);
+        sort(aQuick, j+1, hi);
+    }
+}
