@@ -1,0 +1,9 @@
+public class Insertion {//сортировка вставками
+    public static void sort(Comparable[] aInsertion){
+        int N = aInsertion.length;
+        for (int i = 1; i < N; i++){
+            for (int j = i; j > 0 && Example.less(aInsertion[j], aInsertion[j-1]); j--)
+                Example.exch(aInsertion, j, j-1);
+        }
+    }
+}
