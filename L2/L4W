@@ -26,7 +26,6 @@ public class W {
         }
 
         long M0 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("начало " + M0);
 
         long timeShell = System.currentTimeMillis();
         Shell.sort(aShell);
