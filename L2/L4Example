@@ -1,0 +1,28 @@
+public class Example {
+    static boolean less(Comparable v, Comparable w){
+        return (v.compareTo(w) < 0);
+    }
+
+    static void exch(Comparable[] u, int i, int j){
+        Comparable t = u[i];
+        u[i] = u[j];
+        u[j] = t;
+    }
+
+    static int partition(Comparable[] q, int lo, int hi){//для быстрой сортировки
+        int i = lo, j = hi+1;
+        Comparable v = q[lo];
+        while (true){
+            while (less(q[++i], v))
+                if (i == hi)
+                    break;
+            while (less(v, q[--j]))
+                if (j == lo)
+                    break;
+            if (i >= j) break;
+            exch(q, i, j);
+        }
+        exch(q, lo, j);
+        return j;
+    }
+}
