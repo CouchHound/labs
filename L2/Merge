@@ -1,0 +1,39 @@
+public class Merge{
+    private static Comparable[] aux;
+    private static long time;
+    public static void sort(Comparable[] aMerge){
+        int N = aMerge.length;
+        Comparable[] gm = new Comparable[N];
+        for (int i = 0; i < N; i++)
+            gm[i] = aMerge[i];
+        aux = new Comparable[N];
+        sort(gm, 0, N-1);
+    }
+
+    private static void sort(Comparable[] gm, int lo, int hi){
+        time = System.currentTimeMillis();
+
+        if (hi <= lo)
+            return;
+        int mid = lo + (hi - lo)/2;
+        sort(gm, lo, mid);
+        sort(gm, mid+1, hi);
+        merge(gm, lo, mid, hi);
+    }
+
+    public static void merge (Comparable[] gm, int lo, int mid, int hi){
+        int i = lo, j = mid+1;
+        for (int k = lo; k <= hi; k++)
+            aux[k] = gm[k];
+        for (int k = lo; k <= hi; k++){
+            if (i > mid)
+                gm[k] = aux[j++];
+            else if (j > hi)
+                gm[k] = aux[i++];
+            else if (Example.less(aux[j], aux[i]))
+                gm[k] = aux[j++];
+            else
+                gm[k] = aux[i++];
+        }
+    }
+}
