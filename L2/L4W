@@ -4,15 +4,7 @@ public class W {
     public static void Prepare(Comparable[] a){
         //создание 5 массивов для каждой из сортировки
         int N = a.length;
-        //не смог найти аналог sizeof(x), так что размер одного массива будет определятся так
-        long usedBytes000 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-
         Comparable[] aShell = new Comparable[N];
-
-        long usedBytes001 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        long m = usedBytes001 - usedBytes000;
-        StdOut.println("m = " + m);
-
         Comparable[] aInsertion = new Comparable[N];
         Comparable[] aSelection = new Comparable[N];
         Comparable[] aMerge = new Comparable[N];
