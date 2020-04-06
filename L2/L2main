@@ -1,0 +1,23 @@
+import edu.princeton.cs.introcs.StdOut;
+
+import java.util.Random;
+
+public class VVV {
+
+    public static void main(String[] args) {
+        int M = 25000;
+        while (M <= 80000) {
+            StdOut.println("для " + M + " элементов");
+            Random random = new Random();
+            char[] qq = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm".toCharArray();
+            int Mqq = qq.length;
+            Comparable[] a = new Comparable[M];
+            for (int i = 0; i < M; i++) {
+                a[i] = qq[random.nextInt(Mqq)];
+            }
+            W.Prepare(a);
+            M += 5000;
+            StdOut.println("");
+        }
+    }
+}
