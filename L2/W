@@ -2,7 +2,6 @@ import edu.princeton.cs.introcs.StdOut;
 
 public class W {
     public static void Prepare(Comparable[] a){
-        //создание 5 массивов для каждой из сортировки
         int N = a.length;
         Comparable[] aShell = new Comparable[N];
         Comparable[] aInsertion = new Comparable[N];
@@ -17,36 +16,22 @@ public class W {
             aQuick[i] = a[i];
         }
 
-        long M0 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+        String Z[] = new String[]{"Сортировка Шелла", "Сортировка вставками", "Сортировка выбором", "Сортировка слиянием", "Быстрая сортировка"};
 
-        long timeShell = System.currentTimeMillis();
-        Shell.sort(aShell);
-        System.out.println("Сортировка Шелла заняла " + (System.currentTimeMillis() - timeShell) + " мc");
-        long M1 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("Дополнительной памяти задействовано: " + (M1 - M0));
+        for (int i = 1; i <= 5; i++){
+            long t1 = System.currentTimeMillis();
+            long m1 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
 
-        long timeInsertion = System.currentTimeMillis();
-        Insertion.sort(aInsertion);
-        System.out.println("Сортировка вставками заняла " + (System.currentTimeMillis() - timeInsertion) + " мc");
-        long M2 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("Дополнительной памяти задействовано: " + (M2 - M1));
+            if (i == 1) Shell.sort(aShell);
+            else if (i == 2) Insertion.sort(aInsertion);
+            else if (i == 3) Selection.sort(aSelection);
+            else if (i == 4) Merge.sort(aMerge);
+            else if (i == 5) QuickSort.sort(aQuick);
 
-        long timeSelection = System.currentTimeMillis();
-        Selection.sort(aSelection);
-        System.out.println("Сортировка выбором заняла " + (System.currentTimeMillis() - timeSelection) + " мc");
-        long M3 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("Дополнительной памяти задействовано: " + (M3 - M2));
+            long t2 = System.currentTimeMillis() - t1;
+            long m2 = (Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory()) - m1;
 
-        long timeMerge = System.currentTimeMillis();
-        Merge.sort(aMerge);
-        System.out.println("Сортировка слиянием заняла " + (System.currentTimeMillis() - timeMerge) + " мc");
-        long M4 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("Дополнительной памяти задействовано: " + (M4 - M3));
-
-        long timeQuick = System.currentTimeMillis();
-        QuickSort.sort(aQuick);
-        System.out.println("Быстрая сортировка заняла " + (System.currentTimeMillis() - timeQuick) + " мc");
-        long M5 = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("Дополнительной памяти задействовано: " + (M5 - M4));
+            StdOut.println(Z[i-1] + " заняла " + t2 + " мс, дополнительной памяти было задействоввано " + m2 + " байт");
+        }
     }
 }
