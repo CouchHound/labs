@@ -1,0 +1,29 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import java.util.Scanner;
+
+import static com.company.VV.delMin;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        StdOut.println("Введите количество чисел в потоке: ");
+        int C = in.nextInt();
+        VV.MMM(C);
+    }
+
+    public static void median (int V, Comparable[] pq2){
+        double srz;
+        for (int i = 0; i < pq2.length; i++)
+        {
+            pq2[i] = delMin();
+        }
+        if (V % 2 == 0){
+            int qqq = (int)delMin();
+            srz = (double) ((int)pq2[V/2-1] + qqq)/2;
+        }
+        else srz = (int)pq2[V/2];
+        StdOut.println("\nМедиана равна: " + srz);
+    }
+}
