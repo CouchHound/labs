@@ -1,0 +1,13 @@
+package com.company;
+
+import static com.company.VV.pq;
+
+public class e {
+    protected static boolean more(int a, int b) { return pq[a].compareTo(pq[b]) > 0; }
+
+    protected static void exch(int i, int j) {
+        Comparable t = pq[i];
+        pq[i] = pq[j];
+        pq[j] = t;
+    }
+}
