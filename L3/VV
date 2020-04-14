@@ -1,0 +1,61 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.StdRandom;
+
+import static com.company.Main.median;
+import static com.company.e.exch;
+import static com.company.e.more;
+
+public class VV {
+    public static Comparable[] pq;
+    private static Comparable[] pq2;
+    private static int N = 0;
+
+    public static void MMM(int V) {
+        MaxPQueue(V);
+        StdOut.println("Входной поток: ");
+        for (int i = 0; i < V; i++) {//ввод значений
+            int a = StdRandom.uniform(1,100);
+            StdOut.print(a + " ");
+            insert(a);
+        }
+        median(V, pq2);
+    }
+
+    public static void MaxPQueue(int V) {//создание массивов
+        pq = new Comparable[V + 1];
+        if (V % 2 == 0) pq2 = new Comparable[V / 2];
+        else pq2 = new Comparable[V / 2 + 1];
+    }
+
+    public static void insert(int v) {//втавка
+        pq[++N] = v;//помещается в самый конец
+        swim(N);//всплывает
+    }
+
+    private static void swim(int k) {//всплытие
+        while (k>1 && more(k/2, k)) {
+            exch(k/2, k);
+            k = k/2;
+        }
+    }
+
+    private static void sink(int k) {//погружение
+        while (2*k <= N) {
+            int j = 2*k;
+            if (j<N && more(j, j+1)) j++;
+            if (!more(k, j)) break;
+            exch (k, j);
+            k = j;
+        }
+    }
+
+    public static Comparable delMin()  {//извлечение минимума
+        Comparable min = pq[1];
+        exch(1,N--);
+        pq[N+1] = null;
+        sink(1);
+        return min;
+    }
+}
