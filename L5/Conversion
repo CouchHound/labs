@@ -1,0 +1,115 @@
+package com.company;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Conversion <Key extends Comparable<Value>, Value>{
+    private class Node
+    {//сама структура
+        private Key key;//ключ
+        private Value val;//связанное значение
+        private Node left, right;//ссылки на поддеревья
+
+        public Node (Key key, Value val, int N)
+        {
+            this.key = key;
+            this.val = val;
+        }
+    }
+    public Node root;//собственно и сам корень
+    public void put(Key key, Value val) { root = put(root, key, val); }
+
+    private Node put (Node x, Key key, Value val) {
+        if (x == null)  return new Node(key, val, 1);
+        int cmp = key.compareTo((Value) x.key);
+        if (cmp < 0) x.left = put(x.left, key, val);
+        else if (cmp > 0) x.right = put(x.right, key, val);
+        else x.val = val;
+        return x;
+    }
+////////////////////
+
+    public Node BSTToMinHeap(Node root)//основная функция
+    {// ДБП -> связный список -> двоичная куча
+        Node headLL = null;          //создание головы связного списка
+        headLL = ToLL(root, headLL); //ДБП -> связный список
+        root = ToMN(root, headLL);   //связный список -> двоичная куча
+        return root;
+    }
+
+
+    private Node ToLL(Node root, Node headLL) {
+        // рекурсией от самого большого (правого) он переходит к самому маленькому (левому)
+        if(root == null) return headLL;
+
+        headLL = ToLL(root.right, headLL);//рекурсия проверки наличия элементов на *.right
+
+        root.right = headLL;//присоединение к корню предыдущего значения
+
+        //обгуление левого указателя у головы списка
+        if (headLL != null) (headLL).left = null;
+
+        headLL = root;//преход на корень, то бишь новая голова
+
+        //проверка наличия левого поддерева для включения в список
+        headLL = ToLL(root.left, headLL);
+        return headLL;
+    }
+
+
+    private Node ToMN(Node root, Node headLL) {
+        if (headLL == null) return null;
+
+        Queue<Node> q = new LinkedList<>();//очередь для корней поддеревьев
+
+        root = headLL;         //присваивание корню значение головы списка
+        headLL = headLL.right; //голова списка переходит на правый указатель
+        root.right = null;     //обнуление правой ссылки у корня
+        q.add(root);           //добавление в очередь корня
+
+        while (headLL != null) {//таки до конца, за исключением нулей
+            Node main = q.peek(); //корень забирается в отдельную переменную, после чего удаляется из очереди
+            q.remove();
+
+            Node leftMain = headLL; //левое значение наибольшему из оставшихся
+            headLL = headLL.right;  //снова переход головы к ячейке правого указателя
+            leftMain.right = null;  //обнуление ссылки на следующий элемент
+            q.add(leftMain);        //добавление в очередь как отдельный элемент
+            main.left = leftMain;   //создание левой ссылки на бывший headLL у главного
+
+            if (headLL != null) {        //за исключением проверки наличия элемента
+                Node rightMain = headLL; //то же самое, только для правого указателя
+                headLL = headLL.right;
+                rightMain.right = null;
+                q.add(rightMain);
+                main.right = rightMain;
+            }
+        }//последние элементы так и останутся в очереди
+        return root;
+    }
+
+
+    public void Print(Node root)//печать по уровням
+    {
+        if (root == null) return;
+
+        Queue<Node> q = new LinkedList<>();//очередь для корней
+        q.add(root);
+
+        while (q.size() > 0)//пока не закончатся все элементы
+        {
+            int nodeCount = q.size();
+            while (nodeCount > 0)//пока не закончатся элементы уровня
+            {
+                Node node = q.peek();              //ссылка на первое значение в очереди
+                System.out.print( node.key + " "); //печать ключа
+                q.remove();                        //удалить из очереди
+                //если левый/правый не пустой, то добавить в очередь, создавая новый уровень
+                if (node.left != null) q.add(node.left);
+                if (node.right != null) q.add(node.right);
+                nodeCount--;
+            }
+            System.out.println();//переход на следующий уровень
+        }
+    }
+}
