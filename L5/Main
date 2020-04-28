@@ -1,0 +1,27 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+
+class Main
+{
+    public static void main(String args[])
+    {//сбалансированное небольшое дерево было взято для наглядности
+        Conversion bst = new Conversion();
+
+        bst.put(9, 1);
+        bst.put(5,2);
+        bst.put(13, 3);
+        bst.put(3,4);
+        bst.put(7, 5);
+        bst.put(11,6);
+        bst.put(15, 7);
+
+        StdOut.println("Иcходное дерево:");
+        bst.Print(bst.root);//печать дерева
+
+        bst.root = bst.BSTToMinHeap(bst.root);
+
+        StdOut.println("\nПолучившаяся куча:");
+        bst.Print(bst.root);//печать "кучи"
+    }
+}
