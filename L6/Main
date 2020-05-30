@@ -1,0 +1,20 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.StdRandom;
+
+public class Main {
+    private static final int K = 7;
+
+    public static void main(String[] args) {
+        M m = new M();
+        for (int i = 0; i < K; i++) {
+            int key = StdRandom.uniform(1,100);
+            int value = StdRandom.uniform(31,61);
+            m.put(key, value);
+        }
+        m.Print(m.root);
+        if (m.isBST() == false) StdOut.println("Данное дерево не является ДБТ");
+        else                    StdOut.println("Данное дерево является ДБТ");
+    }
+}
