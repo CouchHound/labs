@@ -1,0 +1,65 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class M <Key extends Comparable<Key>, Value> {
+    private class Node{
+        Key key;
+        Value val;
+        Node left, right;
+        int N;
+
+        Node(Key key, Value val, int N){
+            this.key = key;
+            this.val = val;
+            this.N   = N;
+        }
+    }
+
+    Node root;
+
+    private int size(Node h) {
+        if (h == null) return 0;
+        return h.N;
+    }
+
+    public void put(Key key, Value val) { root = put(root, key, val); }
+    private Node put(Node x, Key key, Value val) {
+        if (x == null) return new Node(key, val, 1);
+        if (size(x.left) > size(x.right)) x.right = put(x.right, key, val);//для более-менее сбалансированного распределения
+        else                              x.left = put(x.left, key, val) ;//элементов по дереву
+        x.N = size(x.left) + size(x.right) + 1;
+        return  x;
+    }
+
+    public void Print(Node root) {//печать по уровням
+        if (root == null) return;
+
+        Queue<Node> q = new LinkedList<>();//очередь для корней
+        q.add(root);//все элементы
+
+        while (q.size() > 0) {
+            int nodeCount = q.size();//элементы уровня
+            while (nodeCount > 0) {
+                Node node = q.peek();          //ссылка на первое значение в очереди
+                StdOut.print(node.key + " ");  //печать ключа
+                q.remove();                    //удалить из очереди
+
+                if (node.left != null)  q.add(node.left);//если левый/правый не пустой, то добавить
+                if (node.right != null) q.add(node.right);//в очередь, создавая новый уровень
+                nodeCount--;
+            }
+            System.out.println();//переход на следующий уровень
+        }
+    }
+
+    public boolean isBST() { return isBST(root, null, null); }
+    private boolean isBST(Node x, Key min, Key max) {
+        if (x == null)                                return true;
+        if (min != null && x.key.compareTo(min) <= 0) return false;//если правый подкорень меньше корня
+        if (max != null && x.key.compareTo(max) >= 0) return false;//если левый подкорень больше корня
+        return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
+    }
+}
