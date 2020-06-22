@@ -1,0 +1,32 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.StdRandom;
+
+public class Main {
+
+    public static String generateRandomString(int length) {
+        char[] a = new char[length];
+        char[] alph = "акю".toCharArray();
+        for (int i = 0; i < length; i++) {
+            a[i] = alph[StdRandom.uniform(alph.length)];
+        }
+        return new String(a);
+    }
+
+    public static void main(String[] args) {
+	    int MAXs = 200; //количество элементов
+        int MAXl = 3; //длина элемента
+        int MAXa = 31; //размер массива
+
+	    HashTable2 HT = new HashTable2(MAXa);
+	    StdOut.println("Элементы: ");
+	    for (int i = 0; i < MAXs; i++) {
+	        String s = generateRandomString(MAXl);
+            StdOut.println(s);
+	        HT.put(s, 1);
+        }
+	    StdOut.println("");
+        HT.print();
+    }
+}
