@@ -1,0 +1,60 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+
+public class HashTable2 <Key, Value>{
+    //с линейным опробыванием
+
+    BST bst = new BST();
+
+    private int N;       //количество пар ключ-значение в таблице (разных)
+    private int M;  //размер таблицы с линейным опробыванием
+    private Key[] keys;  //ключи
+    private int[] count; //количество
+
+    public HashTable2(int cap) {
+        keys = (Key[]) new Object[cap];
+        count = new int[cap];
+        this.M = cap;
+    }
+
+    private int hash(Key key) {//хэш функция
+        return (key.hashCode() & 0x7fffffff) % M;
+    }
+
+    public void put(Key key, int c) {
+        if (key == null) throw new IllegalArgumentException("key null, send help");
+
+        if (N >= M/2) resize(2*M);
+        int i;
+        for (i = hash(key); keys[i] != null; i = (i + 1) % M) {//поиск первой пустой ячейки
+            if (keys[i].equals(key)) {//при попадании/нахождении одинаковых ключей
+                count[i] += c;       //увеличиваем значение
+                return;
+            }
+        }
+        keys[i] = key;
+        count[i] = c;
+        N++;
+    }
+
+    private void resize(int newSize) {//удвоение массивов с перехешированием
+        HashTable2<Key, Integer> temp = new HashTable2<>(newSize);
+        for(int i = 0; i < M; i++) {
+            if (keys[i] != null)
+                temp.put(keys[i], count[i]);
+        }
+        keys = temp.keys;
+        count = temp.count;
+        M = temp.M;
+    }
+
+    public void print() {
+        for (int i = 0; i < M; i++)
+            if ((keys[i] != null) && (count[i] != 0)) {
+                bst.put((Comparable) keys[i], count[i]);
+                StdOut.println("хеш-значение: " + hash(keys[i]) + ", элемент: " + keys[i] + ", количество вхождений: " + count[i]);//проверка
+            }
+        bst.print();
+    }
+}
