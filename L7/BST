@@ -1,0 +1,48 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+
+public class BST <Key extends Comparable <Key>>{
+    private Node root;
+
+    private class Node {
+        private Key key;
+        private int count;
+        private Node left, right;
+
+        public Node(Key key, int count, int N) {
+            this.key = key;
+            this.count = count;
+        }
+    }
+
+    public void put(Key key, int count) { root = put(root, key, count); }
+    private Node put(Node x, Key key, int count) {
+        if (x == null) return new Node(key, count, 1);
+        //сравнение по количеству повторений
+        if (count < x.count)
+            x.left = put(x.left, key, count);
+        else if (count > x.count)
+            x.right = put(x.right, key, count);
+        else {//если количесвта равны, то по значению
+            int cmp = key.compareTo(x.key);
+            if (cmp > 0)
+                x.left = put(x.left, key, count);
+            else if (cmp < 0)
+                x.right = put(x.right, key, count);
+        }
+        return x;
+    }
+
+    public void print() {
+        StdOut.println("");
+        print(root);
+    }
+
+    private void print(Node x) {
+        if (x == null) { return; }
+        print(x.right);
+        StdOut.println("элемент: " + x.key + ", количество повторений: " + x.count);
+        print(x.left);
+    }
+}
