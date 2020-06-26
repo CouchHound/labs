@@ -1,7 +1,6 @@
 package com.company;
 
 import edu.princeton.cs.introcs.StdOut;
-import edu.princeton.cs.introcs.Stopwatch;
 
 public class GenerateCombinations {
 
