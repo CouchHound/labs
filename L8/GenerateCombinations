@@ -1,0 +1,53 @@
+package com.company;
+
+import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.Stopwatch;
+
+public class GenerateCombinations {
+
+    int k = 0;  //счетчик для вставки
+    String[] q; //массив со строковыми значениями
+    int qs = 1; //переменная размера массива
+
+    public void prepare(char[] a, int MAXl) {
+        int size = MAXl;
+        int length = MAXl;
+        for (int j = 1; j <= length; j++) { //подсчет нужного размера для массива q
+            qs = qs * j;
+        }
+        q = new String[qs];
+
+        GenerateCombinations(a, size, length);
+        LSD.sort(q, length);
+        print();
+    }
+
+    private void GenerateCombinations(char[] a, int size, int length) {
+        if (size == 1) {
+            q[k] = String.valueOf(a);
+            k++;
+            return;
+        }
+
+        for (int i = 0; i < size; i++) {
+            GenerateCombinations(a, size - 1, length);
+            if (size % 2 == 1) {
+                char p;
+                p = a[0];
+                a[0] = a[size-1];
+                a[size - 1] = p;
+            }
+            else {
+                char p;
+                p = a[i];
+                a[i] = a[size - 1];
+                a[size - 1] = p;
+            }
+        }
+    }
+
+    private void print() {
+        for (int i = 0; i < qs; i++)
+            StdOut.println(q[i] + "\t" + (i+1));
+    }
+}
